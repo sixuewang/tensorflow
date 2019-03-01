@@ -39,6 +39,7 @@ cc_library(
     name = "experimental_ops",
     srcs = [
         "ctc_beam_search_decoder.cc",
+        "gru.cc",
     ],
     # Suppress warnings that are introduced by Eigen Tensor.
     copts = tflite_copts() + [
@@ -73,5 +74,18 @@ tf_cc_test(
         "//tensorflow/lite/kernels:test_util",
         "@com_google_googletest//:gtest",
         "@flatbuffers",
+    ],
+)
+
+tf_cc_test(
+    name = "gru_test",
+    size = "small",
+    srcs = ["gru_test.cc"],
+    tags = ["tflite_not_portable_ios"],
+    deps = [
+        ":experimental_ops",
+        "//tensorflow/lite:framework",
+        "//tensorflow/lite/kernels:test_util",
+        "@com_google_googletest//:gtest",
     ],
 )
